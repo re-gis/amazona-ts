@@ -1,8 +1,24 @@
-import express, { Request, Response } from "express";
-import { sampleProducts } from "./data";
+import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import { productRouter } from "./routes/product.router";
+import { seedRouter } from "./routes/seed.router";
 const app = express();
+dotenv.config();
 
+/* DATABASE */
+const MONGO_URI =
+  process.env.MONGO_URI || "mongodb://localhost:27017/tsamazona";
+
+mongoose.set("strictQuery", true);
+
+mongoose
+  .connect(MONGO_URI)
+  .then(() => console.log("DB Connected!"))
+  .catch(() => console.log("Error connecting to DB!"));
+
+/* CORS */
 app.use(
   cors({
     credentials: true,
@@ -10,14 +26,11 @@ app.use(
   })
 );
 
-app.get("/api/products", (req: Request, res: Response) => {
-  return res.status(200).json(sampleProducts);
-});
+/* SEED ROUTES */
+app.use('/api/seed', seedRouter)
 
-
-app.get('/api/products/:slug', (req: Request, res: Response) => {
-  return res.json(sampleProducts.find((x) => x.slug === req.params.slug))
-})
+/* ROUTES */
+app.use("/api/products", productRouter);
 
 app.listen(4000, () => {
   console.log("Node server running on port 4000...");
