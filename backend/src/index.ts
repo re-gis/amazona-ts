@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { productRouter } from "./routes/product.router";
 import { seedRouter } from "./routes/seed.router";
+import { userRouter } from "./routes/user.router";
 const app = express();
 dotenv.config();
 
@@ -31,6 +32,8 @@ app.use('/api/seed', seedRouter)
 
 /* ROUTES */
 app.use("/api/products", productRouter);
+
+app.use('/api/users', userRouter)
 
 app.listen(4000, () => {
   console.log("Node server running on port 4000...");
