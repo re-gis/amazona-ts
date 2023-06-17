@@ -9,9 +9,12 @@ export const userRouter = express.Router();
 userRouter.post(
   "/signin",
   expressAsyncHandler(async (req: Request, res: Response) => {
-    const user = await UserModel.findOne({ email: req.body.email });
+    const { password, email } = req.body;
+    if (!password || !email)
+      return res.status(401).send({ message: "All credentials are required!" });
+    const user = await UserModel.findOne({ email: email });
     if (user) {
-      if (bcrypt.compareSync(req.body.password, user.password)) {
+      if (bcrypt.compareSync(password, user.password)) {
         return res.json({
           _id: user._id,
           name: user.name,
