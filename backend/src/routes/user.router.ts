@@ -23,8 +23,8 @@ userRouter.post(
           token: generateToken(user),
         });
       }
-    }
+    } 
 
-    return res.status(201).send({ message: "Invalid email or password" });
+    return res.status(401).send({ message: "Invalid email or password" });
   })
 );
