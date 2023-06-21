@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { productRouter } from "./routes/product.router";
 import { seedRouter } from "./routes/seed.router";
 import { userRouter } from "./routes/user.router";
+import { orderRouter } from "./routes/order.router";
 const app = express();
 dotenv.config();
 
@@ -30,12 +31,14 @@ app.use(
 );
 
 /* SEED ROUTES */
-app.use('/api/seed', seedRouter)
+app.use("/api/seed", seedRouter);
 
 /* ROUTES */
 app.use("/api/products", productRouter);
 
-app.use('/api/users', userRouter)
+app.use("/api/users", userRouter);
+
+app.use("/api/orders", orderRouter);
 
 app.listen(4000, () => {
   console.log("Node server running on port 4000...");
