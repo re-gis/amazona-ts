@@ -70,7 +70,7 @@ export class Order {
   public _id!: string;
 
   @prop({ required: true })
-  public orederItems!: Item[];
+  public orderItems!: Item[];
 
   @prop()
   public shippingAddress?: ShippingAddress;
@@ -99,13 +99,13 @@ export class Order {
   @prop({ required: true, default: false })
   public isPaid!: boolean;
 
-  @prop({ required: true })
+  @prop()
   public paidAt!: Date;
 
-  @prop({ required: true, default: false })
+  @prop({ default: false })
   public isDelivered!: boolean;
 
-  @prop({ required: true })
+  @prop()
   public deliveredAt!: Date;
 }
 
