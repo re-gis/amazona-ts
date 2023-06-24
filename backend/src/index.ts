@@ -6,6 +6,8 @@ import { productRouter } from "./routes/product.router";
 import { seedRouter } from "./routes/seed.router";
 import { userRouter } from "./routes/user.router";
 import { orderRouter } from "./routes/order.router";
+import "colors";
+import { keyRouter } from "./routes/key.router";
 const app = express();
 dotenv.config();
 
@@ -19,8 +21,8 @@ mongoose.set("strictQuery", true);
 
 mongoose
   .connect(MONGO_URI)
-  .then(() => console.log("DB Connected!"))
-  .catch(() => console.log("Error connecting to DB!"));
+  .then(() => console.log(`DB Connected!`.underline.bgYellow.black))
+  .catch(() => console.log("Error connecting to DB!".underline.red));
 
 /* CORS */
 app.use(
@@ -33,13 +35,21 @@ app.use(
 /* SEED ROUTES */
 app.use("/api/seed", seedRouter);
 
-/* ROUTES */
+/* -------------- ROUTES ---------------- */
+
+// Products
 app.use("/api/products", productRouter);
 
+// Users
 app.use("/api/users", userRouter);
 
+// Orders
 app.use("/api/orders", orderRouter);
 
+// Keys
+app.use("/api/keys", keyRouter);
+
+/* -------------------------------------- */
 app.listen(4000, () => {
-  console.log("Node server running on port 4000...");
+  console.log("Node server running on port 4000...".underline.bgCyan);
 });
