@@ -6,6 +6,7 @@ import { productRouter } from "./routes/product.router";
 import { seedRouter } from "./routes/seed.router";
 import { userRouter } from "./routes/user.router";
 import { orderRouter } from "./routes/order.router";
+import path from "path";
 import "colors";
 import { keyRouter } from "./routes/key.router";
 const app = express();
@@ -50,6 +51,8 @@ app.use("/api/orders", orderRouter);
 app.use("/api/keys", keyRouter);
 
 /* -------------------------------------- */
+
+app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 app.listen(4000, () => {
   console.log("Node server running on port 4000...".underline.bgCyan);
 });
