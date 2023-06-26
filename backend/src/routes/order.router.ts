@@ -6,6 +6,15 @@ import { Product } from "../models/product.model";
 export const orderRouter = express.Router();
 
 orderRouter.get(
+  "/mine",
+  isAuth,
+  expressAsyncHandler(async (req: Request, res: Response) => {
+    const orders = await OrderModel.find({ user: req.user._id });
+    return res.status(200).json(orders);
+  })
+);
+
+orderRouter.get(
   "/:id",
   isAuth,
   expressAsyncHandler(async (req: Request, res: Response) => {
@@ -63,7 +72,9 @@ orderRouter.put(
 
       const updatedOrder = await order.save();
 
-      return res.status(201).send(updatedOrder);
+      return res
+        .status(201)
+        .send({ order: updatedOrder, message: "Order paid successfully!" });
     }
     return res.status(404).send({ message: "Order not found!" });
   })
