@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import express, { Request, Response } from "express";
 import expressAsyncHandler from "express-async-handler";
 import { ProductModel } from "../models/product.model";
@@ -8,7 +10,7 @@ export const seedRouter = express.Router();
 
 seedRouter.get(
   "/",
-  expressAsyncHandler(async (req: Request, res: Response) => {
+  expressAsyncHandler(async (req: any, res: any) => {
     await ProductModel.deleteMany({});
     const createdProducts = await ProductModel.insertMany(sampleProducts);
 

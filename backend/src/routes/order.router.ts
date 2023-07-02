@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import express, { Request, Response } from "express";
 import expressAsyncHandler from "express-async-handler";
 import { isAuth } from "../utils";
@@ -8,7 +10,7 @@ export const orderRouter = express.Router();
 orderRouter.get(
   "/mine",
   isAuth,
-  expressAsyncHandler(async (req: Request, res: Response) => {
+  expressAsyncHandler(async (req: any, res: any) => {
     const orders = await OrderModel.find({ user: req.user._id });
     return res.status(200).json(orders);
   })
@@ -17,7 +19,7 @@ orderRouter.get(
 orderRouter.get(
   "/:id",
   isAuth,
-  expressAsyncHandler(async (req: Request, res: Response) => {
+  expressAsyncHandler(async (req: any, res: any) => {
     const order = await OrderModel.findById(req.params.id);
     if (order) {
       return res.status(200).json(order);
@@ -30,7 +32,7 @@ orderRouter.get(
 orderRouter.post(
   "/",
   isAuth,
-  expressAsyncHandler(async (req: Request, res: Response) => {
+  expressAsyncHandler(async (req: any, res: any) => {
     if (req.body.orderItems.length === 0) {
       return res.status(400).send({ message: "Cart is empty!" });
     } else {
@@ -58,7 +60,7 @@ orderRouter.post(
 orderRouter.put(
   "/:id/pay",
   isAuth,
-  expressAsyncHandler(async (req: Request, res: Response) => {
+  expressAsyncHandler(async (req: any, res: any) => {
     const order = await OrderModel.findById(req.params.id).populate("user");
     if (order) {
       (order.isPaid = true),
